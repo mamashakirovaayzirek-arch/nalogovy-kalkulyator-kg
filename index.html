@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Налоговый калькулятор — Кыргызстан</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-logo">С</div>
+        <div class="header-title">Налоговый калькулятор — Кыргызская Республика</div>
+    </div>
+    
+    <div class="container">
+        <!-- Шаг 1: Выбор вида деятельности -->
+        <div id="step1" class="card">
+            <div class="card-header">📋 Выберите вид деятельности</div>
+            <div class="card-body">
+                <div class="step-indicator">
+                    <div class="step active">
+                        <div class="step-circle">1</div>
+                        <span>Вид деятельности</span>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="step">
+                        <div class="step-circle">2</div>
+                        <span>Расчёт налога</span>
+                    </div>
+                </div>
+                
+                <div class="tax-type-selector">
+                    <button class="tax-type-btn" onclick="selectActivity('trade')">
+                        <div>
+                            <div>Торговая деятельность (розничная торговля)</div>
+                            <div class="desc">Субъект, за исключением импортёра, экспортёра, дистрибьютора</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('agro_processing')">
+                        <div>
+                            <div>Переработка сельхозпродукции, производство товаров, туроператорская деятельность, разработка ПО</div>
+                            <div class="desc">А также турагентская деятельность</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('other')">
+                        <div>
+                            <div>Остальные виды деятельности</div>
+                            <div class="desc">Все виды деятельности, не указанные в других категориях</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('catering_paid')">
+                        <div>
+                            <div>Общественное питание, оплаченное (платное)</div>
+                            <div class="desc">Кафе, рестораны, столовые с оплатой</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('sewing_textile')">
+                        <div>
+                            <div>Швейное и/или текстильное производство</div>
+                            <div class="desc">Производство одежды, тканей, текстильных изделий</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('jewelry')">
+                        <div>
+                            <div>Производство и/или реализация ювелирных изделий</div>
+                            <div class="desc">Ювелирные украшения и изделия из драгоценных металлов</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('sauna')">
+                        <div>
+                            <div>Сауна</div>
+                            <div class="desc">Банные услуги, сауны, бани (кроме муниципальных)</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('billiard')">
+                        <div>
+                            <div>Бильярд</div>
+                            <div class="desc">Бильярдные клубы и залы</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                    
+                    <button class="tax-type-btn" onclick="selectActivity('bath_non_municipal')">
+                        <div>
+                            <div>Баня, за исключением муниципальных бань</div>
+                            <div class="desc">Коммерческие банные услуги</div>
+                        </div>
+                        <span class="arrow">›</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Шаг 2: Калькулятор -->
+        <div id="step2" class="card hidden">
+            <div class="card-header">🧮 Расчёт единого налога</div>
+            <div class="card-body">
+                <div class="step-indicator">
+                    <div class="step completed">
+                        <div class="step-circle">✓</div>
+                        <span>Вид деятельности</span>
+                    </div>
+                    <span class="step-arrow">→</span>
+                    <div class="step active">
+                        <div class="step-circle">2</div>
+                        <span>Расчёт налога</span>
+                    </div>
+                </div>
+                
+                <button class="back-btn" onclick="goBack()">
+                    ← Вернуться к выбору вида деятельности
+                </button>
+                
+                <div class="period-selector">
+                    <label>Налоговый период:</label>
+                    <select id="quarter">
+                        <option value="1">I квартал</option>
+                        <option value="2">II квартал</option>
+                        <option value="3">III квартал</option>
+                        <option value="4">IV квартал</option>
+                    </select>
+                    <input type="number" id="year" value="2026" min="2020" max="2030">
+                    <span style="color:#6c757d; font-size:14px;">год</span>
+                </div>
+                
+                <div id="activityTitle" class="activity-title"></div>
+                <div id="calculatorContent"></div>
+                
+                <div class="actions">
+                    <button class="print-btn" onclick="window.print()">🖨️ Печать / Сохранить PDF</button>
+                    <button class="reset-btn" onclick="resetAll()">🔄 Очистить всё</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
